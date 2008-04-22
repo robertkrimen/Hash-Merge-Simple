@@ -5,7 +5,7 @@ use strict;
 
 =head1 NAME
 
-Hash::Merge::Simple - The great new Hash::Merge::Simple!
+Hash::Merge::Simple - Recursively merge two or more hashes, simply
 
 =head1 VERSION
 
@@ -14,43 +14,93 @@ Version 0.01
 =cut
 
 our $VERSION = '0.01';
-
+use vars qw/@ISA @EXPORT_OK/;
+@ISA = qw/Exporter/;
+@EXPORT_OK = qw/merge/;
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+    use Hash::Merge::Simple qw/merge/;
 
-Perhaps a little code snippet.
+    my $a = { a => 1 };
+    my $b = { a => 100, b => 2};
 
-    use Hash::Merge::Simple;
+    # Merge with righthand hash taking precedence
+    my $c = merge $a, $b;
+    # $c is { a => 100, b => 2 } ... Note: a => 100 has overridden => 1
 
-    my $foo = Hash::Merge::Simple->new();
-    ...
+    # Also, merge will take care to recursively merge any child hashes found
+    my $a = { a => 1, c => 3, d => { i => 2 }, r => {} };
+    my $b = { b => 2, a => 100, d => { l => 4 } };
+    my $c = merge $a, $b;
+    # $c is { a => 100, b => 2, c => 3, d => { i => 2, l => 4 }, r => {} }
 
-=head1 EXPORT
+    # You can also merge more than two hashes at the same time 
+    # The precedence increases from left to right (the rightmost has the most precedence)
+    my $everything = merge $this, $that, $mine, $yours, $kitchen_sink, 
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
+=head1 DESCRIPTION
 
-=head1 FUNCTIONS
+Hash::Merge::Simple will recursively merge two or more hashes and return the result as a new hash reference. The merge function will descend and merge
+hashes that exist under the same node in both the left and right hash, but doesn't attempt to combine arrays, objects, scalars, or anything else. The rightmost hash
+also takes precedence, replacing whatever was in the left hash if a conflict occurs.
 
-=head2 function1
+This code was pretty much taken straight from L<Catalyst::Utils>, and modified to handle more than 2 hashes at the same time....
+
+=head1 EXPORTS
+
+=head2 merge
+
+See below.
+
+=head1 METHODS
+
+=head2 Hash::Merge::Simple->merge( <hash1>, <hash2>, <hash3>, ..., <hashN> )
+
+=head2 Hash::Merge::Simple::merge( <hash1>, <hash2>, <hash3>, ..., <hashN> )
+
+Merge <hash1> through <hashN>, with the nth-most (rightmost) hash taking precedence.
+
+Returns a new hash reference representing the merge.
+
+NOTE: The code does not currently check for cycles, so infinite loops are possible.
 
 =cut
 
-sub function1 {
-}
+# This was stoled from Catalyst::Utils... thanks guys!
+sub merge (@);
+sub merge (@) {
+    shift if ! ref $_[0]; # Take care of the case we're called like Hash::Merge::Simple->merge(...)
+    my ($left, @right) = @_;
 
-=head2 function2
+    return $left unless @right;
 
-=cut
+    return merge($left, merge(@right)) if @right > 1;
 
-sub function2 {
+    my ($right) = @right;
+
+    my %merge = %$left;
+
+    for my $key (keys %$right) {
+        my $hr = (ref $right->{$key} || '') eq 'HASH';
+        my $hl  = ((exists $left->{$key} && ref $left->{$key}) || '') eq 'HASH';
+
+        if ($hr and $hl){
+            $merge{$key} = merge($left->{$key}, $right->{$key});
+        }
+        else {
+            $merge{$key} = $right->{$key};
+        }
+    }
+    
+    return \%merge;
 }
 
 =head1 AUTHOR
 
 Robert Krimen, C<< <rkrimen at cpan.org> >>
+
+L<Catalyst>
 
 =head1 BUGS
 
@@ -93,6 +143,7 @@ L<http://search.cpan.org/dist/Hash-Merge-Simple>
 
 =head1 ACKNOWLEDGEMENTS
 
+This code was pretty much taken directly from L<Catalyst::Utils>
 
 =head1 COPYRIGHT & LICENSE
 
