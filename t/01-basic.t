@@ -28,3 +28,13 @@ use Hash::Merge::Simple qw/merge/;
     cmp_deeply(merge({ a => 1, b => [ 3 ] }, { a => 2 }, { a => 3 }, { a => 4, b => [ 8 ] }, { a => 5 }), { a => 5, b => [ 8 ] });
     cmp_deeply(merge({ a => 1 }, { b => 2 }, { c => 3 }, { d => 4 }, { e => 5 }), { qw/a 1 b 2 c 3 d 4 e 5/ });
 }
+
+if (0) {
+    
+    exit;
+
+    # Infinity-ty-ty-ty-ty
+    my $a = {};
+    $a->{b} = $a;
+    merge $a, $a;
+}

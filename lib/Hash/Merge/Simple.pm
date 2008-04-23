@@ -9,11 +9,11 @@ Hash::Merge::Simple - Recursively merge two or more hashes, simply
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 use vars qw/@ISA @EXPORT_OK/;
 @ISA = qw/Exporter/;
 @EXPORT_OK = qw/merge/;
@@ -29,7 +29,7 @@ use vars qw/@ISA @EXPORT_OK/;
     my $c = merge $a, $b;
     # $c is { a => 100, b => 2 } ... Note: a => 100 has overridden => 1
 
-    # Also, merge will take care to recursively merge any child hashes found
+    # Also, merge will take care to recursively merge any subordinate hashes found
     my $a = { a => 1, c => 3, d => { i => 2 }, r => {} };
     my $b = { b => 2, a => 100, d => { l => 4 } };
     my $c = merge $a, $b;
@@ -37,7 +37,7 @@ use vars qw/@ISA @EXPORT_OK/;
 
     # You can also merge more than two hashes at the same time 
     # The precedence increases from left to right (the rightmost has the most precedence)
-    my $everything = merge $this, $that, $mine, $yours, $kitchen_sink, 
+    my $everything = merge $this, $that, $mine, $yours, $kitchen_sink, ...;
 
 =head1 DESCRIPTION
 
@@ -45,7 +45,7 @@ Hash::Merge::Simple will recursively merge two or more hashes and return the res
 hashes that exist under the same node in both the left and right hash, but doesn't attempt to combine arrays, objects, scalars, or anything else. The rightmost hash
 also takes precedence, replacing whatever was in the left hash if a conflict occurs.
 
-This code was pretty much taken straight from L<Catalyst::Utils>, and modified to handle more than 2 hashes at the same time....
+This code was pretty much taken straight from L<Catalyst::Utils>, and modified to handle more than 2 hashes at the same time.
 
 =head1 EXPORTS
 
@@ -63,7 +63,11 @@ Merge <hash1> through <hashN>, with the nth-most (rightmost) hash taking precede
 
 Returns a new hash reference representing the merge.
 
-NOTE: The code does not currently check for cycles, so infinite loops are possible.
+NOTE: The code does not currently check for cycles, so infinite loops are possible:
+
+    my $a = {};
+    $a->{b} = $a;
+    merge $a, $a;
 
 =cut
 
@@ -100,7 +104,9 @@ sub merge (@) {
 
 Robert Krimen, C<< <rkrimen at cpan.org> >>
 
-L<Catalyst>
+=head2 SEE ALSO
+
+L<Catalyst::Utils>
 
 =head1 BUGS
 
