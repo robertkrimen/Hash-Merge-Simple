@@ -9,11 +9,11 @@ Hash::Merge::Simple - Recursively merge two or more hashes, simply
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 use vars qw/@ISA @EXPORT_OK/;
 @ISA = qw/Exporter/;
 @EXPORT_OK = qw/merge/;
@@ -104,9 +104,9 @@ sub merge (@) {
 
 Robert Krimen, C<< <rkrimen at cpan.org> >>
 
-=head2 SEE ALSO
+=head1 SEE ALSO
 
-L<Catalyst::Utils>
+L<Hash::Merge>, L<Catalyst::Utils>
 
 =head1 BUGS
 
@@ -149,7 +149,11 @@ L<http://search.cpan.org/dist/Hash-Merge-Simple>
 
 =head1 ACKNOWLEDGEMENTS
 
-This code was pretty much taken directly from L<Catalyst::Utils>
+This code was pretty much taken directly from L<Catalyst::Utils>:
+
+Sebastian Riedel C<sri@cpan.org>
+
+Yuval Kogman C<nothingmuch@woobling.org>
 
 =head1 COPYRIGHT & LICENSE
 
