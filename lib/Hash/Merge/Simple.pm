@@ -158,7 +158,10 @@ Robert Krimen, C<< <rkrimen at cpan.org> >>
 
 =head1 SEE ALSO
 
-L<Hash::Merge>, L<Catalyst::Utils>
+L<Hash::Merge>
+L<Catalyst::Utils>
+L<Clone>
+L<Storable>
 
 =head1 BUGS
 
