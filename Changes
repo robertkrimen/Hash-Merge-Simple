@@ -1,3 +1,8 @@
+0.04 Saturday February 21 23:22:34 PST 2009:
+ - Addressed bug 41738: https://rt.cpan.org/Ticket/Display.html?id=41738 (thanks Uri) 
+ - Updated boilerplate and Makefile.PL
+ - Conversion of repository to git (github)
+
 0.03 Sunday May 04 02:39:59 PDT 2008:
  - Tweak acknowledgements
  - Reference Hash::Merge in SEE ALSO

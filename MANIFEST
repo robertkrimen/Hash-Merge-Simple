@@ -17,7 +17,7 @@ inc/Module/Install/Metadata.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 t/01-basic.t
-t/author/boilerplate.t
-t/author/pod-coverage.t
-t/author/pod.t
-
+t/9000-bug-41738-merge-with-side-effects.t
+t/release/boilerplate.t
+t/release/pod-coverage.t
+t/release/pod.t

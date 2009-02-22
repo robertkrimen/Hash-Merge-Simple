@@ -9,14 +9,14 @@ Hash::Merge::Simple - Recursively merge two or more hashes, simply
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 use vars qw/@ISA @EXPORT_OK/;
 @ISA = qw/Exporter/;
-@EXPORT_OK = qw/merge/;
+@EXPORT_OK = qw/merge clone_merge dclone_merge/;
 
 =head1 SYNOPSIS
 
@@ -69,12 +69,26 @@ NOTE: The code does not currently check for cycles, so infinite loops are possib
     $a->{b} = $a;
     merge $a, $a;
 
+NOTE: If you want to avoid giving/receiving side effects with the merged result, use C<clone_merge> or C<dclone_merge>
+An example of this problem (thanks Uri):
+
+    my $left = { a => { b => 2 } } ;
+    my $right = { c => 4 } ;
+
+    my $result = merge( $left, $right ) ;
+
+    $left->{a}{b} = 3 ;
+    $left->{a}{d} = 5 ;
+
+    # $result->{a}{b} == 3 !
+    # $result->{a}{d} == 5 !
+
 =cut
 
 # This was stoled from Catalyst::Utils... thanks guys!
 sub merge (@);
 sub merge (@) {
-    shift if ! ref $_[0]; # Take care of the case we're called like Hash::Merge::Simple->merge(...)
+    shift unless ref $_[0]; # Take care of the case we're called like Hash::Merge::Simple->merge(...)
     my ($left, @right) = @_;
 
     return $left unless @right;
@@ -86,8 +100,8 @@ sub merge (@) {
     my %merge = %$left;
 
     for my $key (keys %$right) {
-        my $hr = (ref $right->{$key} || '') eq 'HASH';
-        my $hl  = ((exists $left->{$key} && ref $left->{$key}) || '') eq 'HASH';
+
+        my ($hr, $hl) = map { ref $_->{$key} eq 'HASH' } $right, $left;
 
         if ($hr and $hl){
             $merge{$key} = merge($left->{$key}, $right->{$key});
@@ -98,6 +112,44 @@ sub merge (@) {
     }
     
     return \%merge;
+}
+
+=head2 Hash::Merge::Simple->clone_merge( <hash1>, <hash2>, <hash3>, ..., <hashN> )
+
+=head2 Hash::Merge::Simple::clone_merge( <hash1>, <hash2>, <hash3>, ..., <hashN> )
+
+Perform a merge, clone the merge, and return the result
+
+This is useful in cases where you need to ensure that the result can be tweaked without fear
+of giving/receiving any side effects
+
+This method will use L<Clone> to do the cloning
+
+=cut
+
+sub clone_merge {
+    require Clone;
+    my $result = merge @_;
+    return Clone::clone( $result );
+}
+
+=head2 Hash::Merge::Simple->dclone_merge( <hash1>, <hash2>, <hash3>, ..., <hashN> )
+
+=head2 Hash::Merge::Simple::dclone_merge( <hash1>, <hash2>, <hash3>, ..., <hashN> )
+
+Perform a merge, clone the merge, and return the result
+
+This is useful in cases where you need to ensure that the result can be tweaked without fear
+of giving/receiving any side effects
+
+This method will use L<Storable> (dclone) to do the cloning
+
+=cut
+
+sub dclone_merge {
+    require Storable;
+    my $result = merge @_;
+    return Storable::dclone( $result );
 }
 
 =head1 AUTHOR
