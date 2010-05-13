@@ -5,6 +5,9 @@ TODO:
     - merge( [] ) # Transform even-element array into a hash
     - merge( [], [], ... ) # Merge even-element arrays (at the top level only)
 
+0.050 Thursday May 13 11:24:29 PDT 2010:
+    - Conversion to Dist::Zilla (Dzpl), losing auto_install
+
 0.04 Saturday February 21 23:22:34 PST 2009:
     - Addressed bug 41738: https://rt.cpan.org/Ticket/Display.html?id=41738 (thanks Uri) 
     - Updated boilerplate and Makefile.PL

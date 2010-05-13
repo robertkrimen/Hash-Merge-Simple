@@ -1,0 +1,19 @@
+#!/usr/bin/env perl
+use Dzpl
+    name => 'Hash-Merge-Simple',
+    version => '0.05',
+    author => 'Robert Krimen <robertkrimen@gmail.com>',
+    license => 'Perl5',
+    copyright => 'Robert Krimen',
+
+    require => q/
+        Clone
+        Storable
+
+        [Test]
+        Test::Most
+        Test::Deep
+    /;
+;
+
+{ plugin '@ROKR' }

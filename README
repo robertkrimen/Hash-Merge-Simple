@@ -2,10 +2,10 @@ NAME
     Hash::Merge::Simple - Recursively merge two or more hashes, simply
 
 VERSION
-    Version 0.04
+    version 0.05
 
 SYNOPSIS
-        use Hash::Merge::Simple qw/merge/;
+        use Hash::Merge::Simple qw/ merge /;
 
         my $a = { a => 1 };
         my $b = { a => 100, b => 2};
@@ -35,11 +35,7 @@ DESCRIPTION
     This code was pretty much taken straight from Catalyst::Utils, and
     modified to handle more than 2 hashes at the same time.
 
-EXPORTS
-  merge
-    See below.
-
-METHODS
+USAGE
   Hash::Merge::Simple->merge( <hash1>, <hash2>, <hash3>, ..., <hashN> )
   Hash::Merge::Simple::merge( <hash1>, <hash2>, <hash3>, ..., <hashN> )
     Merge <hash1> through <hashN>, with the nth-most (rightmost) hash taking
@@ -87,41 +83,14 @@ METHODS
 
     This method will use Storable (dclone) to do the cloning
 
-AUTHOR
-    Robert Krimen, "<rkrimen at cpan.org>"
-
 SEE ALSO
-    Hash::Merge, Catalyst::Utils
+    Hash::Merge
 
-BUGS
-    Please report any bugs or feature requests to "bug-hash-merge-simple at
-    rt.cpan.org", or through the web interface at
-    <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Hash-Merge-Simple>. I
-    will be notified, and then you'll automatically be notified of progress
-    on your bug as I make changes.
+    Catalyst::Utils
 
-SUPPORT
-    You can find documentation for this module with the perldoc command.
+    Clone
 
-        perldoc Hash::Merge::Simple
-
-    You can also look for information at:
-
-    *   RT: CPAN's request tracker
-
-        <http://rt.cpan.org/NoAuth/Bugs.html?Dist=Hash-Merge-Simple>
-
-    *   AnnoCPAN: Annotated CPAN documentation
-
-        <http://annocpan.org/dist/Hash-Merge-Simple>
-
-    *   CPAN Ratings
-
-        <http://cpanratings.perl.org/d/Hash-Merge-Simple>
-
-    *   Search CPAN
-
-        <http://search.cpan.org/dist/Hash-Merge-Simple>
+    Storable
 
 ACKNOWLEDGEMENTS
     This code was pretty much taken directly from Catalyst::Utils:
@@ -130,9 +99,12 @@ ACKNOWLEDGEMENTS
 
     Yuval Kogman "nothingmuch@woobling.org"
 
-COPYRIGHT & LICENSE
-    Copyright 2008 Robert Krimen, all rights reserved.
+AUTHOR
+      Robert Krimen <robertkrimen@gmail.com>
 
-    This program is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself.
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2010 by Robert Krimen.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
 

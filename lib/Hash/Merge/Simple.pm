@@ -1,26 +1,16 @@
 package Hash::Merge::Simple;
+# ABSTRACT: Recursively merge two or more hashes, simply
 
 use warnings;
 use strict;
 
-=head1 NAME
-
-Hash::Merge::Simple - Recursively merge two or more hashes, simply
-
-=head1 VERSION
-
-Version 0.04
-
-=cut
-
-our $VERSION = '0.04';
 use vars qw/@ISA @EXPORT_OK/;
 @ISA = qw/Exporter/;
 @EXPORT_OK = qw/merge clone_merge dclone_merge/;
 
 =head1 SYNOPSIS
 
-    use Hash::Merge::Simple qw/merge/;
+    use Hash::Merge::Simple qw/ merge /;
 
     my $a = { a => 1 };
     my $b = { a => 100, b => 2};
@@ -47,13 +37,7 @@ also takes precedence, replacing whatever was in the left hash if a conflict occ
 
 This code was pretty much taken straight from L<Catalyst::Utils>, and modified to handle more than 2 hashes at the same time.
 
-=head1 EXPORTS
-
-=head2 merge
-
-See below.
-
-=head1 METHODS
+=head1 USAGE
 
 =head2 Hash::Merge::Simple->merge( <hash1>, <hash2>, <hash3>, ..., <hashN> )
 
@@ -152,55 +136,15 @@ sub dclone_merge {
     return Storable::dclone( $result );
 }
 
-=head1 AUTHOR
-
-Robert Krimen, C<< <rkrimen at cpan.org> >>
-
 =head1 SEE ALSO
 
 L<Hash::Merge>
+
 L<Catalyst::Utils>
+
 L<Clone>
+
 L<Storable>
-
-=head1 BUGS
-
-Please report any bugs or feature requests to C<bug-hash-merge-simple at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Hash-Merge-Simple>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
-
-
-
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc Hash::Merge::Simple
-
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Hash-Merge-Simple>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Hash-Merge-Simple>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Hash-Merge-Simple>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Hash-Merge-Simple>
-
-=back
-
 
 =head1 ACKNOWLEDGEMENTS
 
@@ -210,14 +154,6 @@ Sebastian Riedel C<sri@cpan.org>
 
 Yuval Kogman C<nothingmuch@woobling.org>
 
-=head1 COPYRIGHT & LICENSE
-
-Copyright 2008 Robert Krimen, all rights reserved.
-
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
-
-
 =cut
 
-1; # End of Hash::Merge::Simple
+1;
