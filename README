@@ -2,7 +2,7 @@ NAME
     Hash::Merge::Simple - Recursively merge two or more hashes, simply
 
 VERSION
-    version 0.05
+    version 0.051
 
 SYNOPSIS
         use Hash::Merge::Simple qw/ merge /;
@@ -100,7 +100,7 @@ ACKNOWLEDGEMENTS
     Yuval Kogman "nothingmuch@woobling.org"
 
 AUTHOR
-      Robert Krimen <robertkrimen@gmail.com>
+    Robert Krimen <robertkrimen@gmail.com>
 
 COPYRIGHT AND LICENSE
     This software is copyright (c) 2010 by Robert Krimen.
